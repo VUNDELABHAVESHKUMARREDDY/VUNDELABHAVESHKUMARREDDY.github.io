@@ -15,12 +15,25 @@
       line-height: 1.6;
       background: #0f172a;
       color: #e2e8f0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20% -10%;
+      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.2), transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(14, 165, 233, 0.15), transparent 45%);
+      z-index: -1;
+      animation: glowShift 14s ease-in-out infinite alternate;
     }
 
     .container {
       max-width: 760px;
       margin: 0 auto;
       padding: 2rem 1.25rem 3rem;
+      animation: fadeInUp 700ms ease-out both;
     }
 
     .card {
@@ -29,6 +42,16 @@
       border-radius: 12px;
       padding: 1.25rem;
       margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: cardReveal 600ms ease-out forwards;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #38bdf8;
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.18);
     }
 
     h1, h2 {
@@ -39,15 +62,61 @@
     a {
       color: #7dd3fc;
       text-decoration: none;
+      transition: color 180ms ease, text-shadow 180ms ease;
     }
 
     a:hover {
       text-decoration: underline;
+      color: #bae6fd;
+      text-shadow: 0 0 10px rgba(125, 211, 252, 0.45);
     }
 
     ul {
       padding-left: 1.2rem;
       margin-bottom: 0;
+    }
+
+    .card:nth-of-type(1) { animation-delay: 120ms; }
+    .card:nth-of-type(2) { animation-delay: 220ms; }
+    .card:nth-of-type(3) { animation-delay: 320ms; }
+    .card:nth-of-type(4) { animation-delay: 420ms; }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes cardReveal {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glowShift {
+      from {
+        transform: translate3d(-2%, -1%, 0) scale(1);
+      }
+      to {
+        transform: translate3d(2%, 1%, 0) scale(1.08);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
     }
   </style>
 </head>
